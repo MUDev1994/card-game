@@ -1,15 +1,14 @@
-
-let cards = ["apple", "apple", "flower", "flower", "water", "water", "earth", "earth", "house", "house"];
-let won = false;
-let board = document.getElementById("game-board");
-let cardsInPlay = [];
-let flipallow = true;
-let thiscard = [];
-let scr = 0;
+var cards = ["apple", "apple", "flower", "flower", "water", "water", "earth", "earth", "house", "house"];
+var won = false;
+var board = document.getElementById("game-board");
+var cardsInPlay = [];
+var flipallow = true;
+var thiscard = [];
+var scr = 0;
 function nav(i) {
-    let game = document.getElementById("game");
-    let ins = document.getElementById("ins");
-    let rope = document.querySelector(".rope");
+    var game = document.getElementById("game");
+    var ins = document.getElementById("ins");
+    var rope = document.querySelector(".rope");
     if (i === "game") {
         ins.style.display = "none";
         game.style.display = "flex";
@@ -20,33 +19,33 @@ function nav(i) {
         ins.style.display = "block";
     }
 }
-
 function createCards() {
-    // for (let i = 0; i < cards.length; i += 1) {
-    for (let i = 0; i < cards.length + 10; i += 1) {
-        let container = document.createElement('div');
+    // for (var i = 0; i < cards.length; i += 1) {
+    for (var i = 0; i < cards.length + 10; i += 1) {
+        var container = document.createElement('div');
         container.className = 'container options';
-        let card = document.createElement('div');
+        var card = document.createElement('div');
         card.id = 'card';
         container.appendChild(card);
-        let front = document.createElement('figure');
+        var front = document.createElement('figure');
         front.className = 'front';
-        let back = document.createElement('figure');
+        var back = document.createElement('figure');
         back.className = 'back';
         card.appendChild(front);
         card.appendChild(back);
         board.appendChild(container);
-        let rndnumb = Math.floor(Math.random() * cards.length);
+        var rndnumb = Math.floor(Math.random() * cards.length);
         // container.setAttribute('data-card', cards[i]);
         container.setAttribute('data-card', cards[rndnumb]);
         cards.splice(rndnumb, 1);
         container.setAttribute('count', 0);
-        let con = document.querySelectorAll(".container");
-        container.onclick = function() {
+        var con = document.querySelectorAll(".container");
+        container.onclick = function(e) {
+            if (this.hasAttribute('gotcard')) return false;
             if (flipallow === true) {
                 this.firstChild.className = "flipped flippedfront";
-                let data = this.getAttribute('data-card');
-                let countdata = this.getAttribute('count');
+                var data = this.getAttribute('data-card');
+                var countdata = this.getAttribute('count');
                 if (countdata == 1) {
                 } else if (countdata == 0) {
                     this.firstChild.lastChild.style.backgroundImage = "url('images/" + data + ".jpg')";
@@ -54,19 +53,19 @@ function createCards() {
                     this.setAttribute('count', 1);
                 }
             }
-            let score = document.querySelector(".score");
+            var score = document.querySelector(".score");
             if (cardsInPlay.length === 2) {
                 if (cardsInPlay[0] == cardsInPlay[1]) {
                     thiscard.push("Yes", "Yes");
                     scr += 2;
                     score.innerHTML = scr;
-                    for (let a = 0; a < con.length; a += 1) {
+                    for (var a = 0; a < con.length; a += 1) {
                         if (con[a].getAttribute("count") == 1) {
                             con[a].className = "container";
                             con[a].setAttribute("gotcard", "Yes");
                             con[a].setAttribute("count", 2);
                             setTimeout(function() {
-                                for (let b = 0; b < con.length; b += 1) {
+                                for (var b = 0; b < con.length; b += 1) {
                                     if (con[b].getAttribute("count") == 2) {
                                         con[b].firstChild.lastChild.style.backgroundImage = "url('images/won.jpg')";
                                     }
@@ -93,7 +92,7 @@ function createCards() {
                     cardsInPlay = [];
                     flipallow = false;
                     setTimeout(function() {
-                        for (let b = 0; b < con.length; b += 1) {
+                        for (var b = 0; b < con.length; b += 1) {
                             if (con[b].getAttribute("gotcard") != "Yes") {
                                 con[b].firstChild.className = "flipped";
                             }
