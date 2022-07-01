@@ -18,12 +18,7 @@ h2 {
   text-align: center;
 }
 
-#card.flipped {
-  -webkit-transform-style: preserve-3d;
-  -webkit-transform-origin: top;
-}
-
-#card.flippedfront {
+.card.flippedfront {
   -webkit-transform: translateY(100%) rotateX(-180deg);
 }
 
@@ -35,7 +30,9 @@ h2 {
   height: 86vh;
 }
 
-#card {
+.card {
+  -webkit-transform-style: preserve-3d;
+  -webkit-transform-origin: top;
   height: 29.9vh;
   width: 20.2vh;
   transform-style: preserve-3d;
@@ -45,7 +42,7 @@ h2 {
   animation: mymove 1s infinite;
 }
 
-#card figure {
+.card figure {
   margin: 0;
   position: absolute;
   width: 100%;
@@ -54,7 +51,7 @@ h2 {
   background-color: white;
 }
 
-#card .front {
+.card .front {
   background-image: url("images/back.gif");
   background-repeat: no-repeat;
   background-position: 53% 77%;
@@ -62,7 +59,7 @@ h2 {
   border-radius: 3vh;
 }
 
-#card .back {
+.card .back {
   transform: rotateY(180deg);
   -webkit-transform: rotateX(-180deg);
   background-repeat: no-repeat;
