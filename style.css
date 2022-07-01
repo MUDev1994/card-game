@@ -76,64 +76,6 @@ h2 {
   animation-delay: 0.7s;
 }
 
-@keyframes mymove {
-  0% {
-    border-color: #3d3d3e;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  }
-  50% {
-    box-shadow: 0px 3px 22px -4px rgba(0, 0, 0, 0.9);
-  }
-  100% {
-    border-color: #3d3d3e;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  }
-}
-
-@-webkit-keyframes options {
-  0% {
-    -webkit-transform: translateY(-5px);
-    transform: translateY(-5px);
-  }
-  50% {
-    -webkit-transform: translateY(0px);
-    transform: translateY(0px);
-  }
-  100% {
-    -webkit-transform: translateY(-5px);
-    transform: translateY(-5px);
-  }
-}
-
-@keyframes cardContainer {
-  0% {
-    -webkit-transform: translateY(-5px);
-    transform: translateY(-5px);
-  }
-  50% {
-    -webkit-transform: translateY(0px);
-    transform: translateY(0px);
-  }
-  100% {
-    -webkit-transform: translateY(-5px);
-    transform: translateY(-5px);
-  }
-}
-
-@-webkit-keyframes options-float {
-  100% {
-    -webkit-transform: translateY(-5px);
-    transform: translateY(-5px);
-  }
-}
-
-@keyframes options-float {
-  100% {
-    -webkit-transform: translateY(-5px);
-    transform: translateY(-5px);
-  }
-}
-
 .options:hover,
 .options:focus,
 .options:active {
@@ -190,18 +132,6 @@ nav a:hover {
   margin-right: auto;
   padding: 5vh;
   height: 52.5vh;
-}
-
-.fadeOut {
-  animation-name: fadeOut;
-  animation-duration: 3s;
-  animation-delay: 2s;
-}
-
-.fadeIn {
-  animation-name: fadeIn;
-  animation-duration: 3s;
-  animation-delay: 2s;
 }
 
 .restartBttn {
@@ -284,18 +214,6 @@ nav a:hover {
   left: 0;
 }
 
-@keyframes pendulum {
-  0% {
-    transform: rotate(2deg);
-  }
-  50% {
-    transform: rotate(-2deg);
-  }
-  100% {
-    transform: rotate(2deg);
-  }
-}
-
 .score {
   height: 8vh;
   width: 8vh;
@@ -323,6 +241,113 @@ nav a:hover {
 .middle {
   left: 50%;
   margin-left: -3vh;
+}
+
+.fadeOut {
+  animation-name: fadeOut;
+  animation-duration: 3s;
+  animation-delay: 2s;
+}
+
+.fadeIn {
+  animation-name: fadeIn;
+  animation-duration: 3s;
+  animation-delay: 2s;
+}
+
+@-webkit-keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pendulum {
+  0% {
+    transform: rotate(2deg);
+  }
+  50% {
+    transform: rotate(-2deg);
+  }
+  100% {
+    transform: rotate(2deg);
+  }
+}
+
+@keyframes mymove {
+  0% {
+    border-color: #3d3d3e;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  50% {
+    box-shadow: 0px 3px 22px -4px rgba(0, 0, 0, 0.9);
+  }
+  100% {
+    border-color: #3d3d3e;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+}
+
+@-webkit-keyframes options {
+  0% {
+    -webkit-transform: translateY(-5px);
+    transform: translateY(-5px);
+  }
+  50% {
+    -webkit-transform: translateY(0px);
+    transform: translateY(0px);
+  }
+  100% {
+    -webkit-transform: translateY(-5px);
+    transform: translateY(-5px);
+  }
+}
+
+@-webkit-keyframes options-float {
+  100% {
+    -webkit-transform: translateY(-5px);
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes options-float {
+  100% {
+    -webkit-transform: translateY(-5px);
+    transform: translateY(-5px);
+  }
 }
 
 .hide {
