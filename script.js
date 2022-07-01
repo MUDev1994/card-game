@@ -145,5 +145,5 @@ class Card {
 }
 
 const board = document.getElementById("game-board");
-const cards = new Card(board, 2);
+const cards = new Card(board, 5);
 cards.start();
