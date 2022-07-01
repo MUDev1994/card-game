@@ -4,7 +4,6 @@
 <head>
     <title>Card Game</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.css">
     <link rel="icon" href="images/icon.png">
     <link rel="stylesheet" href="style.css">
@@ -12,43 +11,65 @@
 
 <body>
     <nav class="header">
-        <a onclick="nav('game')">Game</a>
-        <a onclick="nav('ins')">Instructions</a>
+        <a>Game</a>
+        <a>Instructions</a>
     </nav>
-    <div id="ins">
-        <br>
-        <div class="area">
-            <h1>Memory Game</h1>
-            <h2>Instructions</h2>
-            <p>Concentration, also known as Match Match, or Memory is a card game in which all of the cards are laid facedown
-                on a surface and two cards are flipped face up over each turn. The object of the game is to turn over pairs
-                of matching cards.</p>
-            <hr>
-            <h2>Scores</h2>
-            <p>Each time you find one pair of two matching cards, you get two points. Each time you don't find, you lose one
-                point. Try Your Best, Good Luck!</p>
-            <hr>
-            <h2>Hint</h2>
-            <p>Whenever the game loads, the cards are laid facedown randomly, so cards may not be where they were in the last
-                game you played!</p>
-        </div>
-    </div>
-    <div id="game">
-        <div class="board" id="game-board">
-        </div>
-        <div class="bttnh" id="bttn" onclick="window.location.href=window.location.href">Restart</div>
-    </div>
-    <div class="rope">
-        <div>
-            <div>
+    <div class="content">
+
+        <div id="game">
+            <div class="board" id="game-board">
+            </div>
+            <div class="restartBttn hide" id="bttn" onclick="window.location.href=window.location.href">Restart</div>
+
+            <div class="rope">
                 <div>
                     <div>
                         <div>
                             <div>
                                 <div>
-                                    <a class="score">0</a>
                                     <div>
+                                        <div>
+                                            <a class="score">0</a>
+                                            <div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <script src="script.js"></script>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="instructions" class="hide">
+            <br>
+            <div class="area">
+                <h1>Memory Game</h1>
+                <h2>Instructions</h2>
+                <p>Concentration, also known as Match Match, or Memory is a card game in which all of the cards are laid
+                    facedown
+                    on a surface and two cards are flipped face up over each turn. The object of the game is to turn
+                    over
+                    pairs
+                    of matching cards.</p>
+                <hr>
+                <h2>Scores</h2>
+                <p>Each time you find one pair of two matching cards, you get two points. Each time you don't find, you
+                    lose
+                    one
+                    point. Try Your Best, Good Luck!</p>
+                <hr>
+                <h2>Hint</h2>
+                <p>Whenever the game loads, the cards are laid facedown randomly, so cards may not be where they were in
+                    the
+                    last
+                    game you played!</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 
 </html>

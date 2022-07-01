@@ -1,108 +1,139 @@
-var cards = ["apple", "apple", "flower", "flower", "water", "water", "earth", "earth", "house", "house"];
-var won = false;
-var board = document.getElementById("game-board");
-var cardsInPlay = [];
-var flipallow = true;
-var thiscard = [];
-var scr = 0;
-function nav(i) {
-    var game = document.getElementById("game");
-    var ins = document.getElementById("ins");
-    var rope = document.querySelector(".rope");
-    if (i === "game") {
-        ins.style.display = "none";
-        game.style.display = "flex";
-        rope.style.display = "block";
-    } else if (i === "ins") {
-        game.style.display = "none";
-        rope.style.display = "none";
-        ins.style.display = "block";
+const board = document.getElementById("game-board");
+const rope = document.querySelector(".rope");
+const restartBttn = document.querySelector("#bttn");
+const game = document.getElementById("game");
+const instructions = document.getElementById("instructions");
+const navigationBarItems = [...document.querySelectorAll('.header > a')];
+const contentChildren = [...document.querySelectorAll('.content > div')];
+
+navigationBarItems.forEach((item, i) => {
+    item.addEventListener("click", () => {
+        contentChildren.forEach(content => content.classList.add('hide'));
+        contentChildren[i].classList.remove('hide');
+    });
+})
+
+const cardsValueArr = ['apple', 'earth', 'flower', 'house', 'water'];
+
+class Card {
+    constructor(board, howManyCardsToCreate) {
+        this.board = board;
+        this.howManyCardsToCreate = howManyCardsToCreate;
+        this.cardsInPlay = [];
+        this.flipallow = true;
+        this.cardsSetFounded = 0;
     }
-}
-function createCards() {
-    // for (var i = 0; i < cards.length; i += 1) {
-    for (var i = 0; i < cards.length + 10; i += 1) {
-        var container = document.createElement('div');
+
+    createCardHtml(value) {
+        let container = document.createElement('div');
         container.className = 'container options';
-        var card = document.createElement('div');
+
+        let card = document.createElement('div');
         card.id = 'card';
         container.appendChild(card);
-        var front = document.createElement('figure');
+
+        let front = document.createElement('figure');
         front.className = 'front';
-        var back = document.createElement('figure');
+
+        let back = document.createElement('figure');
         back.className = 'back';
+
+        // TODO: fix this
+        back.style.backgroundImage = "url('images/card-images/" + cardsValueArr[value] + ".jpg')";
+
         card.appendChild(front);
         card.appendChild(back);
-        board.appendChild(container);
-        var rndnumb = Math.floor(Math.random() * cards.length);
-        // container.setAttribute('data-card', cards[i]);
-        container.setAttribute('data-card', cards[rndnumb]);
-        cards.splice(rndnumb, 1);
+
+        container.setAttribute('data-card', value);
         container.setAttribute('count', 0);
-        var con = document.querySelectorAll(".container");
-        container.onclick = function(e) {
-            if (this.hasAttribute('gotcard')) return false;
-            if (flipallow === true) {
-                this.firstChild.className = "flipped flippedfront";
-                var data = this.getAttribute('data-card');
-                var countdata = this.getAttribute('count');
-                if (countdata == 1) {
-                } else if (countdata == 0) {
-                    this.firstChild.lastChild.style.backgroundImage = "url('images/" + data + ".jpg')";
-                    cardsInPlay.push(data);
-                    this.setAttribute('count', 1);
-                }
-            }
-            var score = document.querySelector(".score");
-            if (cardsInPlay.length === 2) {
-                if (cardsInPlay[0] == cardsInPlay[1]) {
-                    thiscard.push("Yes", "Yes");
-                    scr += 2;
-                    score.innerHTML = scr;
-                    for (var a = 0; a < con.length; a += 1) {
-                        if (con[a].getAttribute("count") == 1) {
-                            con[a].className = "container";
-                            con[a].setAttribute("gotcard", "Yes");
-                            con[a].setAttribute("count", 2);
-                            setTimeout(function() {
-                                for (var b = 0; b < con.length; b += 1) {
-                                    if (con[b].getAttribute("count") == 2) {
-                                        con[b].firstChild.lastChild.style.backgroundImage = "url('images/won.jpg')";
-                                    }
-                                }
-                            }, 1000);
-                        }
-                        if (thiscard.length == con.length) {
-                            con[a].className += " tada";
-                            $("#game-board").addClass('fadeOut');
-                            setTimeout(function() {
-                                $("#game-board").css({
-                                    'display': "none"
-                                });
-                                document.querySelector("#bttn").className = "bttnv";
-                                $(".rope").addClass('middle');
-                            }, 4500);
-                        }
-                    }
-                    cardsInPlay = [];
-                }
-                if (cardsInPlay[0] !== cardsInPlay[1]) {
-                    scr -= 1;
-                    score.innerHTML = scr;
-                    cardsInPlay = [];
-                    flipallow = false;
-                    setTimeout(function() {
-                        for (var b = 0; b < con.length; b += 1) {
-                            if (con[b].getAttribute("gotcard") != "Yes") {
-                                con[b].firstChild.className = "flipped";
-                            }
-                            con[b].setAttribute('count', 0);
-                            flipallow = true;
-                        }
+        return container;
+    }
+
+    addLogicToCards() {
+        this.board.addEventListener('click', (event) => {
+            const card = event.target.closest('.container');
+            if (!card) return;
+
+            if (card.hasAttribute('alreadyFounded') || !this.flipallow || card.querySelector('#card').classList.contains('flippedfront')) return;
+            card.firstChild.className = "flipped flippedfront";
+            this.cardsInPlay.push(card);
+
+            let score = document.querySelector(".score");
+            if (this.cardsInPlay.length === 2) {
+                this.flipallow = false;
+
+                if (this.cardsInPlay[0].getAttribute('data-card') == this.cardsInPlay[1].getAttribute('data-card')) {
+                    this.cardsSetFounded++;
+
+                    setTimeout(() => {
+                        score.innerHTML = Number(score.innerHTML) + 2;
+
+                        this.cardsInPlay[0].setAttribute("alreadyFounded", "true");
+                        this.cardsInPlay[0].querySelector('.back').style.backgroundImage = "url('images/won.jpg')";
+
+                        this.cardsInPlay[1].setAttribute("alreadyFounded", "true");
+                        this.cardsInPlay[1].querySelector('.back').style.backgroundImage = "url('images/won.jpg')";
+
+                        this.cardsInPlay = [];
+                        this.flipallow = true;
                     }, 1000);
+
+                    // Won the game
+                    if (this.cardsSetFounded == this.howManyCardsToCreate) {
+                        [...this.board.children].forEach(card => {
+                            card.classList.remove('options');
+                            card.classList.add('tada');
+                        });
+                        this.board.classList.add('fadeOut');
+
+                        setTimeout(() => {
+                            this.board.style.display = 'none';
+                            restartBttn.classList.remove("hide");
+                            rope.classList.add('middle');
+                        }, 4500);
+                    }
+
+                } else {
+                    score.innerHTML = Number(score.innerHTML) - 1;
+
+                    setTimeout(() => {
+                        this.cardsInPlay[0].querySelector('#card').classList.remove("flippedfront");
+                        this.cardsInPlay[1].querySelector('#card').classList.remove("flippedfront");
+
+                        this.cardsInPlay = [];
+                        this.flipallow = true;
+                    }, 1000);
+
                 }
+
             }
+        })
+
+
+    }
+
+    addCardsToBoard() {
+        const cardsArr = [];
+        for (let i = 0; i < this.howManyCardsToCreate; i++) {
+            cardsArr.push(this.createCardHtml(i), this.createCardHtml(i))
         }
-    };
+
+        this.shuffleArr(cardsArr);
+        this.addLogicToCards();
+        cardsArr.forEach(card => this.board.appendChild(card));
+    }
+
+    shuffleArr(arr) {
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+    }
+
+    start() {
+        this.addCardsToBoard();
+    }
 }
-createCards();
+
+const cards = new Card(board, 5);
+cards.start();
