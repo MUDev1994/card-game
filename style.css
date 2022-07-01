@@ -13,11 +13,6 @@ h2 {
   color: #444;
 }
 
-.name {
-  color: #ff0000;
-  text-align: center;
-}
-
 .card.flippedfront {
   -webkit-transform: translateY(100%) rotateX(-180deg);
 }
@@ -66,21 +61,16 @@ h2 {
   background-position: center;
   border-radius: 10px;
   background-size: cover;
+  background-image: url("images/back.gif");
 }
 
-.container {
+.cardContainer {
   perspective: 800px;
   display: inline-block;
   margin: 7vh;
 }
 
-.matchcard {
-  border-style: inset;
-  border-width: 8px;
-  border-color: #bababa;
-}
-
-.tada {
+.gameOver {
   animation-name: rubberBand;
   animation-duration: 1s;
   animation-delay: 0.7s;
@@ -115,7 +105,7 @@ h2 {
   }
 }
 
-@keyframes container {
+@keyframes cardContainer {
   0% {
     -webkit-transform: translateY(-5px);
     transform: translateY(-5px);
@@ -191,7 +181,7 @@ nav a:hover {
   background-color: #ee5f3c;
 }
 
-.area {
+.instructions .area {
   background: url("images/area.jpg");
   background-size: 30%;
   box-shadow: inset 1px 1px 4px rgba(0, 0, 0, 0.15);
@@ -244,7 +234,7 @@ nav a:hover {
   display: inline-block;
 }
 
-.bttnv:hover {
+.restartBttn:hover {
   background: linear-gradient(to bottom, #bc3315 5%, #d0451b 100%);
   filter: progid:
     DXImageTransform.Microsoft.gradient(
@@ -255,16 +245,13 @@ nav a:hover {
   background-color: #bc3315;
 }
 
-.bttnv:active {
+.restartBttn:active {
   position: relative;
   top: 1px;
 }
 
 #game {
   display: flex;
-}
-
-.score {
 }
 
 .rope div {

@@ -13,12 +13,12 @@ class Card {
     }
 
     createCardHtml(value) {
-        const container = document.createElement('div');
-        container.className = 'container options';
+        const cardContainer = document.createElement('div');
+        cardContainer.className = 'cardContainer options';
 
         const card = document.createElement('div');
         card.className = 'card';
-        container.appendChild(card);
+        cardContainer.appendChild(card);
 
         const front = document.createElement('figure');
         front.className = 'front';
@@ -32,8 +32,8 @@ class Card {
         card.appendChild(front);
         card.appendChild(back);
 
-        container.setAttribute('data-card', value);
-        return container;
+        cardContainer.setAttribute('data-card', value);
+        return cardContainer;
     }
 
     addLogicToNavigationBar() {
@@ -56,7 +56,7 @@ class Card {
         const playerWonTheGame = () => {
             [...this.board.children].forEach(card => {
                 card.classList.remove('options');
-                card.classList.add('tada');
+                card.classList.add('gameOver');
             });
             this.board.classList.add('fadeOut');
 
@@ -102,7 +102,7 @@ class Card {
         }
 
         this.board.addEventListener('click', (event) => {
-            const cardContainer = event.target.closest('.container');
+            const cardContainer = event.target.closest('.cardContainer');
             if (!cardContainer) return;
 
             const card = cardContainer.querySelector('.card');
@@ -145,5 +145,5 @@ class Card {
 }
 
 const board = document.getElementById("game-board");
-const cards = new Card(board, 5);
+const cards = new Card(board, 2);
 cards.start();
