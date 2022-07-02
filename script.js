@@ -5,7 +5,7 @@ class Card {
         this.board = board;
         this.numberOfCardsToCreate = numberOfCardsToCreate;
         this.cardsInPlay = [];
-        this.flipallow = true;
+        this.isFlipAllowed = true;
         this.cardsSetFounded = 0;
         this.score = document.querySelector(".score");
         this.rope = document.querySelector(".rope");
@@ -32,19 +32,26 @@ class Card {
         card.appendChild(front);
         card.appendChild(back);
 
-        cardContainer.setAttribute('data-card', value);
+        cardContainer.setAttribute('card-value', value);
         return cardContainer;
     }
 
     addLogicToNavigationBar() {
+        const header = document.querySelector('.header');
         const navigationBarItems = [...document.querySelectorAll('.header > a')];
         const contentChildren = [...document.querySelectorAll('.content > div')];
+        const navigationBarItemsIndex = {};
+        let lastItemIndex = 0;
 
-        navigationBarItems.forEach((item, i) => {
-            item.addEventListener("click", () => {
-                contentChildren.forEach(content => content.classList.add('hide'));
-                contentChildren[i].classList.remove('hide');
-            });
+        navigationBarItems.forEach((item, index) => (navigationBarItemsIndex[item.innerHTML] = index));
+
+        header.addEventListener('click', (event) => {
+            const index = navigationBarItemsIndex[event.target.innerHTML];
+            if (index === undefined) return;
+
+            contentChildren[lastItemIndex].classList.add('hide');
+            contentChildren[index].classList.remove('hide');
+            lastItemIndex = index;
         })
     }
 
@@ -80,7 +87,7 @@ class Card {
                 this.cardsInPlay[1].querySelector('.back').style.backgroundImage = "url('images/won.jpg')";
 
                 this.cardsInPlay = [];
-                this.flipallow = true;
+                this.isFlipAllowed = true;
             }, 1000);
 
             this.cardsSetFounded++;
@@ -97,7 +104,7 @@ class Card {
                 this.cardsInPlay[1].querySelector('.card').classList.remove("flippedfront");
 
                 this.cardsInPlay = [];
-                this.flipallow = true;
+                this.isFlipAllowed = true;
             }, 1000);
         }
 
@@ -106,14 +113,14 @@ class Card {
             if (!cardContainer) return;
 
             const card = cardContainer.querySelector('.card');
-            if (cardContainer.hasAttribute('alreadyFounded') || !this.flipallow || card.classList.contains('flippedfront')) return;
+            if (cardContainer.hasAttribute('alreadyFounded') || !this.isFlipAllowed || card.classList.contains('flippedfront')) return;
             card.classList.add("flippedfront");
             this.cardsInPlay.push(cardContainer);
 
             if (this.cardsInPlay.length === 2) {
-                this.flipallow = false;
+                this.isFlipAllowed = false;
 
-                const areBothCardsSame = this.cardsInPlay[0].getAttribute('data-card') == this.cardsInPlay[1].getAttribute('data-card');
+                const areBothCardsSame = this.cardsInPlay[0].getAttribute('card-value') == this.cardsInPlay[1].getAttribute('card-value');
                 areBothCardsSame ? handleWhenBothCardsAreSame() : handleWhenBothCardsAreNotSame();
             }
         })
