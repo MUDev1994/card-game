@@ -124,6 +124,10 @@ nav a:hover {
   background-color: #ee5f3c;
 }
 
+nav a.active {
+  background-color: #cd4e2e;
+}
+
 .instructions .area {
   background: url("images/area.jpg");
   background-size: 30%;

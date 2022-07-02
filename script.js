@@ -1,5 +1,3 @@
-const cardsValueArr = ['apple', 'earth', 'flower', 'house', 'water'];
-
 class Card {
     constructor(board, numberOfCardsToCreate) {
         this.board = board;
@@ -25,9 +23,7 @@ class Card {
 
         const back = document.createElement('figure');
         back.className = 'back';
-
-        // TODO: fix this
-        back.style.backgroundImage = "url('images/card-images/" + cardsValueArr[value] + ".jpg')";
+        back.style.backgroundImage = "url('images/card-images/" + value + ".jpg')";
 
         card.appendChild(front);
         card.appendChild(back);
@@ -48,6 +44,9 @@ class Card {
         header.addEventListener('click', (event) => {
             const index = navigationBarItemsIndex[event.target.innerHTML];
             if (!(index !== undefined && contentChildren[index] !== undefined)) return;
+
+            navigationBarItems[lastItemIndex].classList.remove("active");
+            navigationBarItems[index].classList.add("active");
 
             contentChildren[lastItemIndex].classList.add('hide');
             contentChildren[index].classList.remove('hide');
