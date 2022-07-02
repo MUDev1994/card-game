@@ -8,6 +8,9 @@ class Card {
         this.score = document.querySelector(".score");
         this.rope = document.querySelector(".rope");
         this.restartBttn = document.querySelector("#bttn");
+        this.bestScoreElem = document.querySelector('.bestScore');
+        this.bestScoreValueElem = document.querySelector('.bestScore span');
+        this.newBestScoreElem = document.querySelector('.newBestScore');
     }
 
     createCardHtml(value) {
@@ -67,9 +70,19 @@ class Card {
             this.board.classList.add('fadeOut');
 
             setTimeout(() => {
+                const bestScore = this.getBestScore();
+                const currentScore = Number(this.score.innerHTML);
+
                 this.board.classList.add("hide");
                 this.restartBttn.classList.remove("hide");
                 this.rope.classList.add('middle');
+                this.bestScoreElem.classList.remove("hide");
+                this.bestScoreValueElem.innerHTML = Math.max(currentScore, bestScore);
+
+                if (currentScore > bestScore) {
+                    this.setBestScore(currentScore);
+                    this.newBestScoreElem.classList.remove("hide");
+                }
             }, 4500);
         }
 
@@ -143,6 +156,14 @@ class Card {
         }
     }
 
+    setBestScore(score) {
+        localStorage.setItem('bestScore', score);
+    }
+
+    getBestScore() {
+        return Number(localStorage.getItem("bestScore"));
+    }
+
     start() {
         this.addLogicToNavigationBar();
         this.addCardsToBoard();
@@ -151,5 +172,5 @@ class Card {
 }
 
 const board = document.getElementById("game-board");
-const cards = new Card(board, 5);
+const cards = new Card(board, 1);
 cards.start();
