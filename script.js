@@ -47,7 +47,7 @@ class Card {
 
         header.addEventListener('click', (event) => {
             const index = navigationBarItemsIndex[event.target.innerHTML];
-            if (index === undefined) return;
+            if (!(index !== undefined && contentChildren[index] !== undefined)) return;
 
             contentChildren[lastItemIndex].classList.add('hide');
             contentChildren[index].classList.remove('hide');
