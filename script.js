@@ -114,6 +114,11 @@ class Card {
 
 
         const handleWhenBothCardsAreSame = () => {
+            this.cardsInPlay[0].classList.remove("floatCard");
+            this.cardsInPlay[0].querySelector('.card').classList.remove("glowBorder");
+            this.cardsInPlay[1].classList.remove("floatCard");
+            this.cardsInPlay[1].querySelector('.card').classList.remove("glowBorder");
+
             setTimeout(() => {
                 this.changeScore(2);
 
@@ -122,11 +127,6 @@ class Card {
 
                 this.cardsInPlay[1].setAttribute("alreadyFounded", "true");
                 this.cardsInPlay[1].querySelector('.back').style.backgroundImage = "url('images/won.jpg')";
-
-                this.cardsInPlay[0].classList.remove("floatCard");
-                this.cardsInPlay[0].querySelector('.card').classList.remove("glowBorder");
-                this.cardsInPlay[1].classList.remove("floatCard");
-                this.cardsInPlay[1].querySelector('.card').classList.remove("glowBorder");
 
                 this.cardsInPlay = [];
                 this.isFlipAllowed = true;
