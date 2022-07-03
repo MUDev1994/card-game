@@ -289,12 +289,18 @@ nav a.active {
   position: absolute;
   top: 13vh;
   left: 3vh;
+  cursor: pointer;
 }
 
 .hintIcon:hover {
   border: 2px solid #f37920;
   color: #f37920;
-  cursor: pointer;
+  opacity: 1;
+}
+
+.hintIcon.active {
+  border: 2px solid green;
+  color: green;
   opacity: 1;
 }
 

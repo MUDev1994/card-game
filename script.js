@@ -76,6 +76,7 @@ class Card {
             cardsToHint[0].querySelector('.card').classList.add("glowBorder");
             cardsToHint[1].classList.add("floatCard");
             cardsToHint[1].querySelector('.card').classList.add("glowBorder");
+            this.hintIconElem.classList.add('active');
 
             this.changeScore(-1);
         });
@@ -114,20 +115,20 @@ class Card {
 
 
         const handleWhenBothCardsAreSame = () => {
+            if (this.cardsInPlay[0].querySelector('.card').classList.contains("glowBorder")) this.hintIconElem.classList.remove('active');
             this.cardsInPlay[0].classList.remove("floatCard");
             this.cardsInPlay[0].querySelector('.card').classList.remove("glowBorder");
+            this.cardsInPlay[0].setAttribute("alreadyFounded", "true");
+
             this.cardsInPlay[1].classList.remove("floatCard");
             this.cardsInPlay[1].querySelector('.card').classList.remove("glowBorder");
+            this.cardsInPlay[1].setAttribute("alreadyFounded", "true");
 
             setTimeout(() => {
                 this.changeScore(2);
 
-                this.cardsInPlay[0].setAttribute("alreadyFounded", "true");
                 this.cardsInPlay[0].querySelector('.back').style.backgroundImage = "url('images/won.jpg')";
-
-                this.cardsInPlay[1].setAttribute("alreadyFounded", "true");
                 this.cardsInPlay[1].querySelector('.back').style.backgroundImage = "url('images/won.jpg')";
-
                 this.cardsInPlay = [];
                 this.isFlipAllowed = true;
             }, 1000);
