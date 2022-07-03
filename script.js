@@ -11,6 +11,7 @@ class Card {
         this.bestScoreElem = document.querySelector('.bestScore');
         this.bestScoreValueElem = document.querySelector('.bestScore span');
         this.newBestScoreElem = document.querySelector('.newBestScore');
+        this.hintIconElem = document.querySelector('.hintIcon');
     }
 
     createCardHtml(value) {
@@ -61,6 +62,29 @@ class Card {
         this.restartBttn.addEventListener('click', () => window.location.reload());
     }
 
+    addLogicToHintIcon() {
+        this.hintIconElem.addEventListener('click', () => {
+            const hasFoundedAllCards = this.cardsSetFounded === this.numberOfCardsToCreate;
+            if (hasFoundedAllCards) return;
+
+            const isHintAlreadyActive = document.querySelector('.card.glowBorder');
+            if (isHintAlreadyActive) return;
+
+            const alreadyFlippedCard = document.querySelector('.cardContainer:not([alreadyfounded]) .card.flippedfront')?.closest('.cardContainer');
+            const cardToFind = alreadyFlippedCard || document.querySelector('.cardContainer:not([alreadyfounded])');
+            const cardToFindValue = cardToFind.getAttribute('card-value');
+            const cardsToHint = document.querySelectorAll(`.cardContainer[card-value="${cardToFindValue}"]`)
+            cardsToHint[0].querySelector('.card').classList.add("glowBorder");
+            cardsToHint[1].querySelector('.card').classList.add("glowBorder");
+
+            this.changeScore(-1);
+        });
+    }
+
+    changeScore(value) {
+        this.score.innerHTML = Number(this.score.innerHTML) + value;
+    }
+
     addLogicToCards() {
         const playerWonTheGame = () => {
             [...this.board.children].forEach(card => {
@@ -75,6 +99,7 @@ class Card {
 
                 this.board.classList.add("hide");
                 this.restartBttn.classList.remove("hide");
+                this.hintIconElem.classList.add("hide");
                 this.rope.classList.add('middle');
                 this.bestScoreElem.classList.remove("hide");
                 this.bestScoreValueElem.innerHTML = Math.max(currentScore, bestScore);
@@ -86,17 +111,20 @@ class Card {
             }, 4500);
         }
 
-        const changeScore = (value) => (this.score.innerHTML = Number(this.score.innerHTML) + value);
+
 
         const handleWhenBothCardsAreSame = () => {
             setTimeout(() => {
-                changeScore(2);
+                this.changeScore(2);
 
                 this.cardsInPlay[0].setAttribute("alreadyFounded", "true");
                 this.cardsInPlay[0].querySelector('.back').style.backgroundImage = "url('images/won.jpg')";
 
                 this.cardsInPlay[1].setAttribute("alreadyFounded", "true");
                 this.cardsInPlay[1].querySelector('.back').style.backgroundImage = "url('images/won.jpg')";
+
+                this.cardsInPlay[0].querySelector('.card').classList.remove("glowBorder");
+                this.cardsInPlay[1].querySelector('.card').classList.remove("glowBorder");
 
                 this.cardsInPlay = [];
                 this.isFlipAllowed = true;
@@ -110,7 +138,7 @@ class Card {
 
         const handleWhenBothCardsAreNotSame = () => {
             setTimeout(() => {
-                changeScore(-1);
+                this.changeScore(-1);
 
                 this.cardsInPlay[0].querySelector('.card').classList.remove("flippedfront");
                 this.cardsInPlay[1].querySelector('.card').classList.remove("flippedfront");
@@ -168,9 +196,10 @@ class Card {
         this.addLogicToNavigationBar();
         this.addCardsToBoard();
         this.addLogicToRestartBttn();
+        this.addLogicToHintIcon();
     }
 }
 
 const board = document.getElementById("game-board");
-const cards = new Card(board, 5);
+const cards = new Card(board, 2);
 cards.start();
