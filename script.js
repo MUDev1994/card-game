@@ -65,16 +65,16 @@ class Card {
     addLogicToHintIcon() {
         this.hintIconElem.addEventListener('click', () => {
             const hasFoundedAllCards = this.cardsSetFounded === this.numberOfCardsToCreate;
-            if (hasFoundedAllCards) return;
-
             const isHintAlreadyActive = document.querySelector('.card.glowBorder');
-            if (isHintAlreadyActive) return;
+            if (hasFoundedAllCards || isHintAlreadyActive) return;
 
             const alreadyFlippedCard = document.querySelector('.cardContainer:not([alreadyfounded]) .card.flippedfront')?.closest('.cardContainer');
             const cardToFind = alreadyFlippedCard || document.querySelector('.cardContainer:not([alreadyfounded])');
             const cardToFindValue = cardToFind.getAttribute('card-value');
             const cardsToHint = document.querySelectorAll(`.cardContainer[card-value="${cardToFindValue}"]`)
+            cardsToHint[0].classList.add("floatCard");
             cardsToHint[0].querySelector('.card').classList.add("glowBorder");
+            cardsToHint[1].classList.add("floatCard");
             cardsToHint[1].querySelector('.card').classList.add("glowBorder");
 
             this.changeScore(-1);
@@ -123,7 +123,9 @@ class Card {
                 this.cardsInPlay[1].setAttribute("alreadyFounded", "true");
                 this.cardsInPlay[1].querySelector('.back').style.backgroundImage = "url('images/won.jpg')";
 
+                this.cardsInPlay[0].classList.remove("floatCard");
                 this.cardsInPlay[0].querySelector('.card').classList.remove("glowBorder");
+                this.cardsInPlay[1].classList.remove("floatCard");
                 this.cardsInPlay[1].querySelector('.card').classList.remove("glowBorder");
 
                 this.cardsInPlay = [];
