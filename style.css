@@ -131,7 +131,7 @@ nav a.active {
   background-color: #cd4e2e;
 }
 
-.instructions .area {
+.content .area {
   background: url("images/area.jpg");
   background-size: 30%;
   box-shadow: inset 1px 1px 4px rgba(0, 0, 0, 0.15);
@@ -142,18 +142,18 @@ nav a.active {
   height: 52.5vh;
 }
 
-.restartBttn {
+.bttn {
   margin-top: 40vh;
   -moz-box-shadow: inset 0px 0px 0px 0px #cf866c;
   -webkit-box-shadow: inset 0px 0px 0px 0px #cf866c;
   box-shadow: inset 0px 0px 0px 0px #cf866c;
   background: linear-gradient(to bottom, #d0451b 5%, #bc3315 100%);
   filter: progid:
-    DXImageTransform.Microsoft.gradient(
-      startColorstr='#d0451b',
-      endColorstr='#bc3315',
-      GradientType=0
-    );
+        DXImageTransform.Microsoft.gradient(
+          startColorstr='#d0451b',
+          endColorstr='#bc3315',
+          GradientType=0
+        );
   background-color: #d0451b;
   -moz-border-radius: 20px;
   -webkit-border-radius: 20px;
@@ -171,18 +171,18 @@ nav a.active {
   margin-right: auto;
 }
 
-.restartBttn:hover {
+.bttn:hover {
   background: linear-gradient(to bottom, #bc3315 5%, #d0451b 100%);
   filter: progid:
-    DXImageTransform.Microsoft.gradient(
-      startColorstr='#bc3315',
-      endColorstr='#d0451b',
-      GradientType=0
-    );
+        DXImageTransform.Microsoft.gradient(
+          startColorstr='#bc3315',
+          endColorstr='#d0451b',
+          GradientType=0
+        );
   background-color: #bc3315;
 }
 
-.restartBttn:active {
+.bttn:active {
   position: relative;
   top: 1px;
 }
@@ -335,6 +335,70 @@ nav a.active {
 .hintIcon:hover .tooltiptext {
   visibility: visible;
   opacity: 1;
+}
+
+.settings {
+  text-align: center;
+}
+
+.changeNumberOfCardsInput {
+  display: flex;
+  justify-content: center;
+}
+
+.inputNumber {
+  width: 119px;
+  padding: 0 11px;
+  vertical-align: top;
+  text-align: center;
+  outline: none;
+}
+
+.inputNumber::-webkit-inner-spin-button,
+.inputNumber::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.inputNumber,
+.inputNumberDecrement,
+.inputNumberIncrement {
+  border: 1px solid #ccc;
+  height: 79px;
+  user-select: none;
+  font-size: 39px;
+}
+
+.inputNumberDecrement,
+.inputNumberIncrement {
+  display: inline-block;
+  width: 46px;
+  line-height: 79px;
+  background: #f1f1f1;
+  color: #444;
+  text-align: center;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.inputNumberDecrement:active,
+.inputNumberIncrement:active {
+  background: #ddd;
+}
+
+.inputNumberDecrement {
+  border-right: none;
+  border-radius: 4px 0 0 4px;
+}
+
+.inputNumberIncrement {
+  border-left: none;
+  border-radius: 0 4px 4px 0;
+}
+
+.submitBttn {
+  margin-top: 51px;
+  width: 18%;
 }
 
 .fadeOut {
@@ -575,7 +639,7 @@ nav a.active {
     display: block;
   }
 
-  .instructions .area {
+  .content .area {
     height: auto;
   }
 

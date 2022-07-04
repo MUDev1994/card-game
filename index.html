@@ -12,6 +12,7 @@
     <nav class="header">
         <a class="active">Game</a>
         <a>Instructions</a>
+        <a>Settings</a>
         <a href="https://musmanrao1994.github.io/" target="_blank">Portfolio</a>
     </nav>
     <div class="content">
@@ -19,7 +20,7 @@
         <div id="game">
             <div class="board" id="game-board">
             </div>
-            <div class="restartBttn hide" id="bttn">Restart</div>
+            <div class="bttn hide" id="restartBttn">Restart</div>
 
             <div class="bestScore hide">
                 Best Score: &nbsp;<span>0</span>
@@ -76,6 +77,24 @@
                     the
                     last
                     game you played!</p>
+            </div>
+        </div>
+
+        <div class="settings hide">
+            <br>
+            <div class="area">
+                <h1>Settings</h1>
+                <br>
+                <h2>Choose number of cards set</h2>
+                <p>Note: Clicking on Submit will restart the game</p>
+                <br>
+                <div class="changeNumberOfCardsInput">
+                    <span id="inputControl" class="inputNumberDecrement">-</span>
+                    <input class="inputNumber" type="number" value="5" min="1" max="5">
+                    <span id="inputControl" class="inputNumberIncrement">+</span>
+                </div>
+                <br>
+                <div class="bttn submitBttn" id="submitBttn">Submit</div>
             </div>
         </div>
     </div>

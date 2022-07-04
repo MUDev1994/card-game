@@ -1,17 +1,28 @@
 class Card {
-    constructor(board, numberOfCardsToCreate) {
+    constructor(board) {
         this.board = board;
-        this.numberOfCardsToCreate = numberOfCardsToCreate;
+        this.defaultNumberOfCardsToCreate = 5;
+        this.numberOfCardsToCreate = this.getNumberOfCardsToCreate();
         this.cardsInPlay = [];
         this.isFlipAllowed = true;
         this.cardsSetFounded = 0;
         this.score = document.querySelector(".score");
         this.rope = document.querySelector(".rope");
-        this.restartBttn = document.querySelector("#bttn");
+        this.restartBttn = document.querySelector("#restartBttn");
         this.bestScoreElem = document.querySelector('.bestScore');
         this.bestScoreValueElem = document.querySelector('.bestScore span');
         this.newBestScoreElem = document.querySelector('.newBestScore');
         this.hintIconElem = document.querySelector('.hintIcon');
+        this.settings = document.querySelector('.settings');
+        this.inputNumberElem = document.querySelector('.inputNumber');
+    }
+
+    getNumberOfCardsToCreate() {
+        return Number(localStorage.getItem("numberOfCardsToCreate")) || this.defaultNumberOfCardsToCreate;
+    }
+
+    setNumberOfCardsToCreate(value) {
+        localStorage.setItem('numberOfCardsToCreate', value);
     }
 
     createCardHtml(value) {
@@ -112,8 +123,6 @@ class Card {
             }, 4500);
         }
 
-
-
         const handleWhenBothCardsAreSame = () => {
             if (this.cardsInPlay[0].querySelector('.card').classList.contains("glowBorder")) this.hintIconElem.classList.remove('active');
             this.cardsInPlay[0].classList.remove("floatCard");
@@ -145,7 +154,6 @@ class Card {
 
                 this.cardsInPlay[0].querySelector('.card').classList.remove("flippedfront");
                 this.cardsInPlay[1].querySelector('.card').classList.remove("flippedfront");
-
                 this.cardsInPlay = [];
                 this.isFlipAllowed = true;
             }, 1000);
@@ -195,14 +203,35 @@ class Card {
         return Number(localStorage.getItem("bestScore"));
     }
 
+    addLogicToSettings() {
+        this.inputNumberElem.value = this.getNumberOfCardsToCreate();
+
+        const handleChangeInput = (elem) => this.inputNumberElem[elem.innerHTML === "-" ? 'stepDown' : 'stepUp']();
+
+        const handleSubmitBttn = () => {
+            this.setNumberOfCardsToCreate(isNaN(this.inputNumberElem.value) ? this.defaultNumberOfCardsToCreate : Number(this.inputNumberElem.value));
+            window.location.reload();
+        }
+
+        this.settings.addEventListener('click', ({ target }) => {
+            const eventListenerMap = {
+                inputControl: handleChangeInput,
+                submitBttn: handleSubmitBttn,
+            }
+
+            eventListenerMap[target.id]?.(target);
+        })
+    }
+
     start() {
         this.addLogicToNavigationBar();
         this.addCardsToBoard();
         this.addLogicToRestartBttn();
         this.addLogicToHintIcon();
+        this.addLogicToSettings();
     }
 }
 
 const board = document.getElementById("game-board");
-const cards = new Card(board, 5);
+const cards = new Card(board);
 cards.start();
